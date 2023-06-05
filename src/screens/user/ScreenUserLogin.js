@@ -8,6 +8,7 @@ import { ServiceUserLogin } from "../../services/ServiceUser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import WidgetBaseLoader from "../../widgets/base/WidgetBaseLoader";
 import { ContextUserAuthentication } from "../../contexts/ContextUser";
+import { color } from "react-native-reanimated";
 
 const ScreenUserLogin = ({ navigation }) => {
   const [, setIsAuthenticated] = useContext(ContextUserAuthentication);
@@ -76,7 +77,7 @@ const ScreenUserLogin = ({ navigation }) => {
           <Button
             onPress={userLogin}
             mode="contained"
-            style={{ backgroundColor: "#3F3193" }}
+            style={{ backgroundColor: "#B2A4FF" }}
           >
             Login
           </Button>
@@ -85,7 +86,7 @@ const ScreenUserLogin = ({ navigation }) => {
               navigation.navigate("ScreenUserRegister");
             }}
             mode="contained"
-            style={{ backgroundColor: "#5D4251" }}
+            style={{ backgroundColor: "#57C5B6" }}
           >
             Register
           </Button>
