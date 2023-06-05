@@ -73,8 +73,8 @@ const ScreenBarangList = ({ navigation }) => {
           {complete &&
             daftarBarang.map((barang, index) => (
               <DataTable.Row key={index} onPress={() => openBarangEdit(barang)}>
-                <DataTable.Cell>{barang.kode_barang}</DataTable.Cell>
-                <DataTable.Cell>{barang.nama_barang}</DataTable.Cell>
+                <DataTable.Cell>{barang.kodeBarang}</DataTable.Cell>
+                <DataTable.Cell>{barang.namaBarang}</DataTable.Cell>
               </DataTable.Row>
             ))}
         </DataTable>

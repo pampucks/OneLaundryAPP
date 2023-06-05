@@ -48,7 +48,7 @@ const ScreenUserLogin = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#D3A03E" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#7286d3" }}>
       {complete && (
         <ScrollView
           contentContainerStyle={{
@@ -60,14 +60,14 @@ const ScreenUserLogin = ({ navigation }) => {
         >
           <WidgetBaseLogo />
           <TextInput
-            mode="outlined"
+            // mode="outlined"
             label="Email"
             placeholder="Masukan email"
             value={user.email}
             onChangeText={(text) => handleChange("email", text)}
           />
           <TextInput
-            mode="outlined"
+            // mode="outlined"
             label="Password"
             value={user.password}
             secureTextEntry={true}
