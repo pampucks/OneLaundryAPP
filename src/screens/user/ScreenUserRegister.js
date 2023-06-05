@@ -67,7 +67,7 @@ const ScreenUserRegister = ({ navigation }) => {
             }}
           >
             <TextInput
-              style={{ flex: 1 }}
+              style={{ flex: 2 }}
               mode="outlined"
               label="First Name"
               placeholder="Masukan nama"
@@ -75,7 +75,7 @@ const ScreenUserRegister = ({ navigation }) => {
               onChangeText={(text) => handleChange("firstName", text)}
             />
             <TextInput
-              style={{ flex: 1 }}
+              style={{ flex: 2 }}
               mode="outlined"
               label="Last Name"
               placeholder="Masukan nama"

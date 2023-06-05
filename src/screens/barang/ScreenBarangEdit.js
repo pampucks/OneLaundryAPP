@@ -74,7 +74,7 @@ const ScreenBarangEdit = ({ navigation, route }) => {
   }, [route.params.barang]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#9EAD41" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#7286d3" }}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Edit Barang" />

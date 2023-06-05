@@ -1,6 +1,11 @@
 import { useContext, useState } from "react";
 import { ContextUserAuthentication } from "../../contexts/ContextUser";
-import { SafeAreaView, ScrollView, ScrollViewBase } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  ScrollViewBase,
+  StyleSheet,
+} from "react-native";
 import { Appbar, List } from "react-native-paper";
 
 const ScreenUserSetting = ({ navigation }) => {
@@ -8,11 +13,12 @@ const ScreenUserSetting = ({ navigation }) => {
   const [, setIsAuthenticated] = useContext(ContextUserAuthentication);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#9EAD41" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#7286d3" }}>
       <Appbar.Header>
-        <Appbar.BackAction
+        <Appbar.Action
+          icon="menu"
           onPress={() => {
-            navigation.goBack();
+            navigation.toggleDrawer();
           }}
         />
         <Appbar.Content title="Settings" />
@@ -20,6 +26,7 @@ const ScreenUserSetting = ({ navigation }) => {
 
       <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
         <List.Item
+          style={styles.border}
           onPress={() => {
             setIsAuthenticated(false);
             navigation.navigate("RouterUser", { screen: "ScreenUserLogin" });
@@ -34,3 +41,13 @@ const ScreenUserSetting = ({ navigation }) => {
 };
 
 export default ScreenUserSetting;
+
+const styles = StyleSheet.create({
+  border: {
+    borderColor: "#000",
+    borderWidth: 1,
+    width: "35%",
+    backgroundColor: "#9BA4B5",
+    borderBottomRightRadius: 10,
+  },
+});

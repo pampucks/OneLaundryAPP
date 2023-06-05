@@ -36,7 +36,7 @@ const ScreenBarangCreate = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#9EAD41" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#7286d3" }}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Tambah Barang" />
@@ -51,14 +51,14 @@ const ScreenBarangCreate = ({ navigation }) => {
         >
           <View style={{ gap: 24 }}>
             <TextInput
-              mode="outlined"
+              // mode="outlined"
               value={barang.kode_barang || ""}
               onChangeText={(text) => handleInput("kode_barang", text)}
               label="Kode Barang"
             />
 
             <TextInput
-              mode="outlined"
+              // mode="outlined"
               value={barang.nama_barang || ""}
               onChangeText={(text) => handleInput("nama_barang", text)}
               label="Nama Barang"
