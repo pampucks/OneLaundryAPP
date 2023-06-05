@@ -53,7 +53,7 @@ const ScreenBarangList = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#9EAD41" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#7286d3" }}>
       <Appbar.Header>
         <Appbar.Action
           icon="menu"
@@ -61,20 +61,28 @@ const ScreenBarangList = ({ navigation }) => {
             navigation.toggleDrawer();
           }}
         />
-        <Appbar.Content title="Daftar Barang" />
+        <Appbar.Content title="Barang Laundry" />
         <Appbar.Action icon="refresh" onPress={refresh} />
       </Appbar.Header>
       <ScrollView style={{ paddingBottom: 30 }}>
         <DataTable>
-          <DataTable.Header>
-            <DataTable.Title>Kode Barang</DataTable.Title>
-            <DataTable.Title>Nama Barang</DataTable.Title>
+          <DataTable.Header style={{ borderBottomColor: "#9BA4B5" }}>
+            <DataTable.Title textStyle={{ color: "#fff" }}>
+              Kode Barang
+            </DataTable.Title>
+            <DataTable.Title textStyle={{ color: "#fff" }}>
+              Nama Barang
+            </DataTable.Title>
           </DataTable.Header>
           {complete &&
             daftarBarang.map((barang, index) => (
               <DataTable.Row key={index} onPress={() => openBarangEdit(barang)}>
-                <DataTable.Cell>{barang.kodeBarang}</DataTable.Cell>
-                <DataTable.Cell>{barang.namaBarang}</DataTable.Cell>
+                <DataTable.Cell textStyle={{ color: "#fff" }}>
+                  {barang.kodeBarang}
+                </DataTable.Cell>
+                <DataTable.Cell textStyle={{ color: "#fff" }}>
+                  {barang.namaBarang}
+                </DataTable.Cell>
               </DataTable.Row>
             ))}
         </DataTable>
