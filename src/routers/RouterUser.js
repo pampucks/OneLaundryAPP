@@ -5,19 +5,19 @@ import ScreenUserSetting from "../screens/user/ScreenUserSetting";
 
 const Stack = createNativeStackNavigator();
 
+export const RouterUserAuthenticated = ({ navigation }) => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="ScreenUserSetting" component={ScreenUserSetting} />
+    </Stack.Navigator>
+  );
+};
+
 export const RouterUserNotAuthenticated = ({ navigation }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="ScreenUserLogin" component={ScreenUserLogin} />
       <Stack.Screen name="ScreenUserRegister" component={ScreenUserRegister} />
-    </Stack.Navigator>
-  );
-};
-
-export const RouterUserAuthenticated = ({ navigation }) => {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="ScreenUserSetting" component={ScreenUserSetting} />
     </Stack.Navigator>
   );
 };

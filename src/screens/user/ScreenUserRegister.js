@@ -48,7 +48,7 @@ const ScreenUserRegister = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#D3A03E" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#7286d3" }}>
       {complete && (
         <ScrollView
           contentContainerStyle={{
@@ -100,7 +100,7 @@ const ScreenUserRegister = ({ navigation }) => {
           <Button
             onPress={userRegister}
             mode="contained"
-            style={{ backgroundColor: "#3F3193" }}
+            style={{ backgroundColor: "#B2A4FF" }}
           >
             Register
           </Button>
@@ -109,7 +109,7 @@ const ScreenUserRegister = ({ navigation }) => {
               navigation.goBack();
             }}
             mode="contained"
-            style={{ backgroundColor: "#5D4251" }}
+            style={{ backgroundColor: "#57C5B6" }}
           >
             Login
           </Button>
