@@ -5,6 +5,7 @@ import {
   Button,
   DataTable,
   Divider,
+  List,
   TextInput,
 } from "react-native-paper";
 import App from "../../../App";
@@ -44,13 +45,13 @@ const ScreenTransaksiCreate = ({ navigation }) => {
     debounce();
   };
 
-  // const openStatusCucian = _.debounce((item) => {
-  //   setCucian(item);
-  //   setIsAuthenticated(false);
-  //   navigation.navigate("RouterTransaksi", {
-  //     screen: "ScreenTransaksiStatusCucian",
-  //   });
-  // }, 100);
+  const openStatusCucian = _.debounce((item) => {
+    setCucian(item);
+    setIsAuthenticated(false);
+    navigation.navigate("RouterTransaksi", {
+      screen: "ScreenTransaksiStatusCucian",
+    });
+  }, 100);
 
   // const openPengembalian = _.debounce(() => {
   //   navigation.navigate("ScreenTransaksiPengembalian");
@@ -81,13 +82,13 @@ const ScreenTransaksiCreate = ({ navigation }) => {
         }}
         // contentContainerStyle={{ flex: 1, justifyContent: "center" }}
       >
-        {/* <ScreenTransaksiStatusCucian onPress={openStatusCucian} />
+        <ScreenTransaksiStatusCucian onPress={openStatusCucian} />
         {transaksi.no_faktur && (
           <List.Item
             title={transaksi.nama_customer}
-            description={transaksi.noTelepon}
+            // description={transaksi.noTelepon}
           />
-        )} */}
+        )}
         {/* <Divider />
 
         <ScreenTransaksiPengembalian
@@ -169,7 +170,7 @@ const ScreenTransaksiCreate = ({ navigation }) => {
             Lanjut
           </Button>
 
-          <Button
+          {/* <Button
             mode="constained"
             onPress={() => {
               setIsAuthenticated(false);
@@ -179,7 +180,7 @@ const ScreenTransaksiCreate = ({ navigation }) => {
             }}
           >
             Status Cucian
-          </Button>
+          </Button> */}
         </View>
       </ScrollView>
     </SafeAreaView>

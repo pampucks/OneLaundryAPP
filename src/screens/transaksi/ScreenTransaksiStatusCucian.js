@@ -1,4 +1,3 @@
-export default ScreenTransaksiStatusCucian;
 import _ from "lodash";
 import { useState, useEffect } from "react";
 import { Modal, ScrollView } from "react-native";
@@ -11,14 +10,19 @@ import {
   Provider,
   Searchbar,
 } from "react-native-paper";
-import WidgetBaseLoader from "../base/WidgetBaseLoader";
+
 import { ServiceBarangList } from "../../services/ServiceBarang";
+import SchemaTransaksi from "../../schema/SchemaTransaksi";
+import SchemaBarang from "../../schema/SchemaBarang";
+import { ServiceTransaksiList } from "../../services/ServiceTransaksi";
 
 const ScreenTransaksiStatusCucian = ({ navigation }) => {
   const [daftarCucian, setDaftarCucian] = useState([]);
   const [complete, setComplete] = useState(false);
   const [visible, setVisible] = useState(false);
   const [items, setItems] = useState([]);
+  const [transaksi, setTransaksi] = useState(SchemaTransaksi);
+  const [barang, setBarang] = useState(SchemaBarang);
 
   const cucianList = () => {
     setComplete(false);
@@ -39,7 +43,6 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
 
   const item = {
     no_faktur: transaksi.no_faktur,
-    kode_barang: barang.kode_barang,
     nama_barang: barang.nama_barang,
     status_cucian: transaksi.status_cucian,
   };
@@ -84,7 +87,6 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
                 <DataTable>
                   <DataTable.Header>
                     <DataTable.Title>Nomor Faktur</DataTable.Title>
-                    <DataTable.Title>Kode Barang</DataTable.Title>
                     <DataTable.Title>Nama Barang</DataTable.Title>
                     <DataTable.Title>Status</DataTable.Title>
                   </DataTable.Header>
@@ -100,14 +102,14 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
                       }}
                     >
                       <DataTable.Cell>{item.no_faktur}</DataTable.Cell>
-                      <DataTable.Cell>{item.kode_barang}</DataTable.Cell>
                       <DataTable.Cell>{item.nama_barang}</DataTable.Cell>
+                      <DataTable.Cell></DataTable.Cell>
                     </DataTable.Row>
                   ))}
                 </DataTable>
               </ScrollView>
             )}
-            <WidgetBaseLoader complete={complete} />
+            {/* <WidgetBaseLoader complete={complete} /> */}
           </Modal>
         </Portal>
 
@@ -118,7 +120,7 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
             left={() => (
               <>
                 {!complete && <ActivityIndicator animating={!complete} />}
-                {complete && <List.Icon icon="diswasher" />}
+                {complete && <List.Icon icon="dishwasher" />}
               </>
             )}
           ></List.Item>
@@ -127,3 +129,5 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
     </>
   );
 };
+
+export default ScreenTransaksiStatusCucian;
