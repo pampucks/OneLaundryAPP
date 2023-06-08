@@ -1,6 +1,6 @@
 export default {
   no_faktur: "",
-  tanggal_terima: "",
+  tanggal_terima: new Date(),
   nama_customer: "",
   alamat: "",
   noTelpon: "",

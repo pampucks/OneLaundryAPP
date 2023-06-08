@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 
 import WidgetBaseLogo from "../../widgets/base/WidgetBaseLogo";
 import { Button } from "react-native-paper";
+import { ContextUserAuthentication } from "../../contexts/ContextUser";
 
-export default ScreenHome = ({ navigation }) => {
+const ScreenHome = ({ navigation }) => {
+  const [, setIsAuthenticated] = useContext(ContextUserAuthentication);
   return (
     <SafeAreaView style={styles.container}>
       <WidgetBaseLogo />
 
       <Button
         onPress={() => {
-          navigation.navigate("ScreenBarangList");
+          setIsAuthenticated(true);
+          navigation.navigate("RouterBarang", { screen: "ScreenBarangList" });
         }}
         mode="contained"
         style={{ backgroundColor: "#B2A4FF" }}
@@ -20,7 +23,10 @@ export default ScreenHome = ({ navigation }) => {
       </Button>
       <Button
         onPress={() => {
-          //   navigation.navigate("ScreenTransaksiCreate");
+          setIsAuthenticated(true);
+          navigation.navigate("RouterTransaksi", {
+            screen: "ScreenTransaksiCreate",
+          });
         }}
         mode="contained"
         style={{ backgroundColor: "#E8AA42" }}
@@ -29,7 +35,8 @@ export default ScreenHome = ({ navigation }) => {
       </Button>
       <Button
         onPress={() => {
-          //   navigation.navigate("ScreenLaporan");
+          // setIsAuthenticated(true);
+          // navigation.navigate("RouterLaporan", {screen: "ScreenLaporan"});
         }}
         mode="contained"
         style={{ backgroundColor: "#57C5B6" }}
@@ -56,3 +63,5 @@ const styles = StyleSheet.create({
     // width: "100%",
   },
 });
+
+export default ScreenHome;

@@ -78,10 +78,10 @@ const ScreenBarangList = ({ navigation }) => {
             daftarBarang.map((barang, index) => (
               <DataTable.Row key={index} onPress={() => openBarangEdit(barang)}>
                 <DataTable.Cell textStyle={{ color: "#fff" }}>
-                  {barang.kodeBarang}
+                  {barang.kode_barang}
                 </DataTable.Cell>
                 <DataTable.Cell textStyle={{ color: "#fff" }}>
-                  {barang.namaBarang}
+                  {barang.nama_barang}
                 </DataTable.Cell>
               </DataTable.Row>
             ))}

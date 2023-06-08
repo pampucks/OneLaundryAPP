@@ -1,4 +1,4 @@
 export default {
-  kodeBarang: "",
-  namaBarang: "",
+  kode_barang: "",
+  nama_barang: "",
 };
