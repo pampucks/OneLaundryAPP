@@ -8,9 +8,10 @@ import ScreenUserLogin from "./src/screens/user/ScreenUserLogin";
 import { RouterUserNotAuthenticated } from "./src/routers/RouterUser";
 import WidgetBaseSidebar from "./src/widgets/base/WidgetBaseSidebar";
 import WidgetBaseDrawer from "./src/widgets/base/WidgetBaseDrawer";
+import ScreenTransaksiBarangChoice from "./src/screens/transaksi/ScreenTransaksiBarangChoice";
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
-  return <WidgetBaseDrawer />;
+  return <ScreenTransaksiBarangChoice />;
 }
