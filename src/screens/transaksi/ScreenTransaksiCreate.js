@@ -112,14 +112,14 @@ const ScreenTransaksiCreate = ({ navigation }) => {
           <TextInput
             style={{ flex: 1 }}
             value={transaksi.no_faktur || ""}
-            onChangeText={() => {}}
+            onChangeText={(text) => handleInput("no_faktur", text)}
             label="Nomor Faktur"
           />
 
           <TextInput
             style={{ flex: 1 }}
             value={transaksi.nama_customer || ""}
-            onChangeText={() => {}}
+            onChangeText={(text) => handleInput("nama_customer", text)}
             label="Nama Pelanggan"
           />
         </View>
@@ -157,14 +157,14 @@ const ScreenTransaksiCreate = ({ navigation }) => {
           <TextInput
             style={{ flex: 1 }}
             value={transaksi.alamat || ""}
-            onChangeText={() => {}}
+            onChangeText={(text) => handleInput("alamat", text)}
             label="Alamat"
           />
 
           <TextInput
             style={{ flex: 1 }}
             value={transaksi.no_hp || ""}
-            onChangeText={() => {}}
+            onChangeText={(text) => handleInput("no_hp", text)}
             label="Nomor Telepon"
           />
         </View>
