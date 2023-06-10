@@ -8,7 +8,6 @@ import {
   List,
   TextInput,
 } from "react-native-paper";
-import App from "../../../App";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import _ from "lodash";
 import { ServiceTransaksiCreate } from "../../services/ServiceTransaksi";

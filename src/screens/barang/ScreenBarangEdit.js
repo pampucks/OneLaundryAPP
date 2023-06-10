@@ -51,7 +51,7 @@ const ScreenBarangEdit = ({ navigation, route }) => {
 
   const barangDelete = () => {
     const debounce = _.debounce(() => {
-      ServiceBarangDelete(barang.kodeBarang)
+      ServiceBarangDelete(barang.kode_barang)
         .then(() => {
           Alert.alert("Notifikasi", "Berhasil");
           navigation.goBack();
@@ -96,7 +96,7 @@ const ScreenBarangEdit = ({ navigation, route }) => {
               disabled
             />
             <TextInput
-              value={barang.namaBarang || ""}
+              value={barang.nama_barang || ""}
               onChangeText={(text) => handleInput("nama_barang", text)}
               label="Nama Barang"
             />

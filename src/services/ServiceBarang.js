@@ -55,3 +55,22 @@ export function ServiceBarangEdit(payload) {
       .catch((error) => reject(error));
   });
 }
+
+export function ServiceBarangDelete(kode_barang) {
+  return new Promise(async (resolve, reject) => {
+    const config = {
+      headers: {
+        "x-access-token": await AsyncStorage.getItem("@token"),
+      },
+    };
+
+    ServiceBaseRequest.delete(
+      `${CONFIG_BASE_API_URL}/barang/${kode_barang}`,
+      config
+    )
+      .then((response) => {
+        resolve(null);
+      })
+      .catch((error) => reject(error));
+  });
+}
