@@ -1,4 +1,5 @@
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
@@ -21,10 +22,10 @@ ServiceBaseRequest.interceptors.response.use(
     return config;
   },
   (error) => {
-    if (error?.response?.data?.errors) {
-      let messages = error.response.data.errors;
-      console.log(messages);
-    }
+    // if (error?.response?.data?.errors) {
+    //   let messages = error.response.data.errors;
+    //   console.log(messages);
+    // }
 
     if (
       error &&
@@ -43,6 +44,18 @@ ServiceBaseRequest.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const ServiceBaseStoreToken = async (token) => {
+  await AsyncStorage.setItem("token", token);
+};
+
+export const ServiceBaseGetToken = async () => {
+  return await AsyncStorage.getItem("token");
+};
+
+export const ServiceBaseRemoveToken = async () => {
+  await AsyncStorage.removeItem("token");
+};
 
 export const ServiceBaseHumanDate = (date) => {
   const options = {

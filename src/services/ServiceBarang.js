@@ -1,13 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ServiceBaseRequest } from "./ServiceBase";
+import { ServiceBaseGetToken, ServiceBaseRequest } from "./ServiceBase";
 import { CONFIG_BASE_API_URL } from "../config/ConfigBase";
 
 export const ServiceBarangList = (page, terms) => {
   return new Promise(async (resolve, reject) => {
+    let params = { page, terms };
     const config = {
       headers: {
-        "x-access-token": await AsyncStorage.getItem("@token"),
-        params: { page, terms },
+        "x-access-token": await ServiceBaseGetToken(),
+        params,
       },
     };
 
@@ -24,7 +25,7 @@ export function ServiceBarangCreate(payload) {
   return new Promise(async (resolve, reject) => {
     const config = {
       headers: {
-        "x-access-token": await AsyncStorage.getItem("@token"),
+        "x-access-token": await ServiceBaseGetToken(),
       },
     };
 
@@ -40,7 +41,7 @@ export function ServiceBarangEdit(payload) {
   return new Promise(async (resolve, reject) => {
     const config = {
       headers: {
-        "x-access-token": await AsyncStorage.getItem("@token"),
+        "x-access-token": await ServiceBaseGetToken(),
       },
     };
 
@@ -51,6 +52,25 @@ export function ServiceBarangEdit(payload) {
     )
       .then((response) => {
         resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
+export function ServiceBarangDelete(kode_barang) {
+  return new Promise(async (resolve, reject) => {
+    const config = {
+      headers: {
+        "x-access-token": await ServiceBaseGetToken(),
+      },
+    };
+
+    ServiceBaseRequest.delete(
+      `${CONFIG_BASE_API_URL}/barang/${kode_barang}`,
+      config
+    )
+      .then((response) => {
+        resolve(null);
       })
       .catch((error) => reject(error));
   });
