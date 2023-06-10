@@ -35,8 +35,10 @@ const ScreenHome = ({ navigation }) => {
       </Button>
       <Button
         onPress={() => {
-          // setIsAuthenticated(true);
-          // navigation.navigate("RouterLaporan", {screen: "ScreenLaporan"});
+          setIsAuthenticated(true);
+          navigation.navigate("RouterLaporan", {
+            screen: "ScreenLaporanTransaksi",
+          });
         }}
         mode="contained"
         style={{ backgroundColor: "#57C5B6" }}

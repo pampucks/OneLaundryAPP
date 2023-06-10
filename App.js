@@ -13,5 +13,5 @@ import ScreenTransaksiBarangChoice from "./src/screens/transaksi/ScreenTransaksi
 const Drawer = createDrawerNavigator();
 
 export default function App() {
-  return <ScreenTransaksiBarangChoice />;
+  return <WidgetBaseDrawer />;
 }

@@ -4,9 +4,10 @@ import _ from "lodash";
 import { Appbar, List, TextInput } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import WidgetBarangChoice from "../../widgets/barang/WidgetBarangChoice";
+import { ServiceTransaksiCreate } from "../../services/ServiceTransaksi";
 
 const ScreenTransaksiBarangChoice = ({ navigation }) => {
-  const [daftarItemBeli, setDaftarItemBeli] = useState([]);
+  const [daftarItemCucian, setDaftarItemCucian] = useState([]);
   const [complete, setComplete] = useState(false);
 
   const handleInputItemBeli = (index, value, item) => {
@@ -22,11 +23,25 @@ const ScreenTransaksiBarangChoice = ({ navigation }) => {
     });
   };
 
+  const update = (item) => {
+    const debounce = _.debounce(() => {
+      setDaftarItemCucian((values) => {
+        const items = [...values];
+        const b = items.find((value) => value.kode_barang === item.kode_barang);
+        const i = items.findIndex(
+          (value) => value.kode_barang === item.kode_barang
+        );
+
+        return items;
+      });
+    }, 100);
+  };
+
   const addOrUpdate = (item) => {
     const isDuplicate = ServiceBaseIsDuplicateArray(
-      daftarItemBeli,
-      item.kodeBarang,
-      "kodeBarang"
+      daftarItemCucian,
+      item.kode_barang,
+      "kode_barang"
     );
 
     if (isDuplicate) {
@@ -34,6 +49,27 @@ const ScreenTransaksiBarangChoice = ({ navigation }) => {
     } else {
       add(item);
     }
+  };
+
+  const barangChoice = () => {
+    setComplete(false);
+
+    const debounce = _.debounce(() => {
+      item.kode_barang = barang.kode_barang;
+
+      const payload = {
+        ...item,
+        items: [...daftarItemCucian],
+      };
+      ServiceTransaksiCreate(payload)
+        .then(() => {
+          navigation.navigate("ScreenTransaksiPembayaran");
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setComplete(true));
+    }, 500);
+
+    debounce();
   };
 
   useEffect(() => {
@@ -60,12 +96,10 @@ const ScreenTransaksiBarangChoice = ({ navigation }) => {
         <List.Item
           key={index}
           title={`${barang.namaBarang} #${barang.kodeBarang}`}
-          description={`${barang.hargaBeli}`}
           right={(props) => (
             <>
               <TextInput
                 mode="outlined"
-                value={`${barang.jumlahBeli || ""}`}
                 onChangeText={(text) =>
                   handleInputItemBeli(index, text, barang)
                 }
@@ -74,6 +108,12 @@ const ScreenTransaksiBarangChoice = ({ navigation }) => {
           )}
         />
       ))}
+
+      <View style={{ marginHorizontal: 16, gap: 16, marginVertical: 24 }}>
+        <Button onPress={barangChoice} mode="contained">
+          Lanjut
+        </Button>
+      </View>
     </SafeAreaProvider>
   );
 };

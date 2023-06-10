@@ -3,7 +3,7 @@ export default {
   tanggal_terima: new Date(),
   nama_customer: "",
   alamat: "",
-  noTelpon: "",
+  no_hp: "",
   uang_muka: 0,
   berat: 0,
   sisa: 0,

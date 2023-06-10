@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { useState, useEffect, useContext } from "react";
-import { Modal, ScrollView, View } from "react-native";
+import { Modal, ScrollView } from "react-native";
 import {
   ActivityIndicator,
   Appbar,
@@ -17,9 +17,7 @@ import SchemaTransaksi from "../../schema/SchemaTransaksi";
 import SchemaBarang from "../../schema/SchemaBarang";
 import { ServiceTransaksiList } from "../../services/ServiceTransaksi";
 import { ContextUserAuthentication } from "../../contexts/ContextUser";
-import WidgetBaseLoader from "../../widgets/base/WidgetBaseLoader";
-
-const ScreenTransaksiStatusCucian = ({ navigation }) => {
+const ScreenTransaksiDone = ({ navigation }) => {
   const [daftarCucian, setDaftarCucian] = useState([]);
   const [complete, setComplete] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -28,14 +26,14 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
   const [barang, setBarang] = useState(SchemaBarang);
   const [status, setStatus] = useState(false);
 
-  const cucianList = () => {
-    setComplete(false);
+  const cucianDone = () => {
+    setComplete(true);
 
     const debounce = _.debounce(() => {
       ServiceTransaksiList(item)
         .then(({ results }) => {
           setDaftarCucian(results);
-          navigation.navigate("ScreenTransaksiDone");
+          navigation.navigate("ScreenTransaksiCreate");
         })
         .catch((error) => {
           console.log(error);
@@ -46,11 +44,11 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
     debounce();
   };
 
-  const handleStatusChange = (item) => {
-    if (item === "status_cucian") setStatus(true);
-    setIsAuthenticated(false);
-    navigation.navigate("RouterTransaksi", { screen: "ScreenTransaksiDone" });
-  };
+  //   const handleStatusChange = (item) => {
+  //     if (item === "status_cucian") setStatus(true);
+  //     setIsAuthenticated(false);
+  //     navigation.navigate("RouterTransaksi", { screen: "ScreenTransaksiDone" });
+  //   };
 
   const item = {
     no_faktur: transaksi.no_faktur,
@@ -59,7 +57,7 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
   };
 
   useEffect(() => {
-    cucianList();
+    cucianDone();
   }, []);
 
   return (
@@ -100,7 +98,6 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
                     <DataTable.Title>Nomor Faktur</DataTable.Title>
                     <DataTable.Title>Nama Barang</DataTable.Title>
                     <DataTable.Title>Status</DataTable.Title>
-                    <DataTable.Title>Aksi</DataTable.Title>
                   </DataTable.Header>
 
                   {daftarCucian.map((item, index) => (
@@ -116,24 +113,18 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
                       <DataTable.Cell>{item.no_faktur}</DataTable.Cell>
                       <DataTable.Cell>{item.nama_barang}</DataTable.Cell>
                       <DataTable.Cell>{item.status_cucian}</DataTable.Cell>
-                      <DataTable.Cell>
+                      {/* <DataTable.Cell>
                         {status && (
                           <Button onPress={handleStatusChange}>Sudah</Button>
                         )}
-                      </DataTable.Cell>
+                      </DataTable.Cell> */}
                     </DataTable.Row>
                   ))}
                 </DataTable>
-                <View
-                  style={{ marginHorizontal: 16, gap: 16, marginVertical: 32 }}
-                >
-                  <Button onPress={cucianList} mode="contained">
-                    Lanjut
-                  </Button>
-                </View>
+                <Button onPress={cucianDone}>Lanjut</Button>
               </ScrollView>
             )}
-            <WidgetBaseLoader complete={complete} />
+            {/* <WidgetBaseLoader complete={complete} /> */}
           </Modal>
         </Portal>
 
@@ -154,4 +145,4 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
   );
 };
 
-export default ScreenTransaksiStatusCucian;
+export default ScreenTransaksiDone;

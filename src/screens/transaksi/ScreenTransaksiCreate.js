@@ -24,6 +24,7 @@ const ScreenTransaksiCreate = ({ navigation }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [cucian, setCucian] = useState({});
   const [, setIsAuthenticated] = useContext(ContextUserAuthentication);
+  const [pengembalian, setPengembalian] = useState();
 
   const handleInput = (name, value) => {
     if (name === "tanggal_terima") setShowDatePicker(false);
@@ -53,9 +54,13 @@ const ScreenTransaksiCreate = ({ navigation }) => {
     });
   }, 100);
 
-  // const openPengembalian = _.debounce(() => {
-  //   navigation.navigate("ScreenTransaksiPengembalian");
-  // }, 100);
+  const openPengembalian = _.debounce(() => {
+    setPengembalian();
+    setIsAuthenticated(false);
+    navigation.navigate("RouterTransaksi", {
+      screen: "ScreenTransaksiPengembalian",
+    });
+  }, 100);
 
   useEffect(() => {
     setComplete(false);
@@ -159,7 +164,7 @@ const ScreenTransaksiCreate = ({ navigation }) => {
 
           <TextInput
             style={{ flex: 1 }}
-            value={transaksi.noTelpon || ""}
+            value={transaksi.no_hp || ""}
             onChangeText={() => {}}
             label="Nomor Telepon"
           />
