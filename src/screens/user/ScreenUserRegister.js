@@ -8,8 +8,8 @@ import WidgetBaseLoader from "../../widgets/base/WidgetBaseLoader";
 
 const ScreenUserRegister = ({ navigation }) => {
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   }); // TODO: add schema user
@@ -71,16 +71,16 @@ const ScreenUserRegister = ({ navigation }) => {
               mode="outlined"
               label="First Name"
               placeholder="Masukan nama"
-              value={user.firstName}
-              onChangeText={(text) => handleChange("firstName", text)}
+              value={user.first_name}
+              onChangeText={(text) => handleChange("first_name", text)}
             />
             <TextInput
               style={{ flex: 2 }}
               mode="outlined"
               label="Last Name"
               placeholder="Masukan nama"
-              value={user.lastName}
-              onChangeText={(text) => handleChange("lastName", text)}
+              value={user.last_name}
+              onChangeText={(text) => handleChange("last_name", text)}
             />
           </View>
           <TextInput
