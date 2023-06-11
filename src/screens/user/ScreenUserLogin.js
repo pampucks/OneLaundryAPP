@@ -27,6 +27,7 @@ const ScreenUserLogin = ({ navigation }) => {
         .then(async (token) => {
           await AsyncStorage.setItem("@token", token);
           Alert.alert("Berhasil", "Anda berhasil login.");
+          console.log(token);
           setIsAuthenticated(true);
           navigation.navigate("RouterHome");
         })
