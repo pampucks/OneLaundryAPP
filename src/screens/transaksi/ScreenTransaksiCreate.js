@@ -11,7 +11,10 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import _ from "lodash";
 import { ServiceTransaksiCreate } from "../../services/ServiceTransaksi";
-import { ServiceBaseHumanDate } from "../../services/ServiceBase";
+import {
+  ServiceBaseHumanDate,
+  ServiceBaseRandomID,
+} from "../../services/ServiceBase";
 import { SafeAreaView, ScrollView, View } from "react-native";
 import ScreenTransaksiStatusCucian from "./ScreenTransaksiStatusCucian";
 import ScreenTransaksiPengembalian from "./ScreenTransaksiPengembalian";
@@ -43,6 +46,10 @@ const ScreenTransaksiCreate = ({ navigation }) => {
         .finally(() => setComplete(true));
     }, 1000);
     debounce();
+  };
+
+  const randomFaktur = () => {
+    handleInput("no_faktur", ServiceBaseRandomID("TX"));
   };
 
   const openStatusCucian = _.debounce((item) => {
@@ -78,22 +85,22 @@ const ScreenTransaksiCreate = ({ navigation }) => {
         />
         <Appbar.Content title="Buat Transaksi" />
       </Appbar.Header>
-
-      <ScrollView
-        style={{
-          marginVertical: 24,
-          marginHorizontal: 24,
-        }}
-        // contentContainerStyle={{ flex: 1, justifyContent: "center" }}
-      >
-        <ScreenTransaksiStatusCucian onPress={openStatusCucian} />
-        {transaksi.no_faktur && (
-          <List.Item
-            title={transaksi.nama_customer}
-            // description={transaksi.noTelepon}
-          />
-        )}
-        {/* <Divider />
+      {complete && (
+        <ScrollView
+          style={{
+            marginVertical: 24,
+            marginHorizontal: 24,
+          }}
+          // contentContainerStyle={{ flex: 1, justifyContent: "center" }}
+        >
+          <ScreenTransaksiStatusCucian onPress={openStatusCucian} />
+          {transaksi.no_faktur && (
+            <List.Item
+              title={transaksi.nama_customer}
+              // description={transaksi.noTelepon}
+            />
+          )}
+          {/* <Divider />
 
         <ScreenTransaksiPengembalian
           icon="hand-coin-outline"
@@ -102,79 +109,83 @@ const ScreenTransaksiCreate = ({ navigation }) => {
         />
         <Divider /> */}
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            gap: 8,
-          }}
-        >
-          <TextInput
-            style={{ flex: 1 }}
-            value={transaksi.no_faktur || ""}
-            onChangeText={(text) => handleInput("no_faktur", text)}
-            label="Nomor Faktur"
-          />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 8,
+            }}
+          >
+            <TextInput
+              style={{ flex: 1 }}
+              value={transaksi.no_faktur || ""}
+              onChangeText={(text) => handleInput("no_faktur", text)}
+              editable={false}
+              label="Nomor Faktur"
+              right={
+                <TextInput.Icon onPress={() => randomFaktur()} icon="reload" />
+              }
+            />
 
-          <TextInput
-            style={{ flex: 1 }}
-            value={transaksi.nama_customer || ""}
-            onChangeText={(text) => handleInput("nama_customer", text)}
-            label="Nama Pelanggan"
-          />
-        </View>
+            <TextInput
+              style={{ flex: 1 }}
+              value={transaksi.nama_customer || ""}
+              onChangeText={(text) => handleInput("nama_customer", text)}
+              label="Nama Pelanggan"
+            />
+          </View>
 
-        <View style={{ marginVertical: 16 }}>
-          <TextInput
-            label="Tanggal"
-            editable={false}
-            value={`${ServiceBaseHumanDate(transaksi.tanggal_terima) || ""}`}
-            right={
-              <TextInput.Icon
-                onPress={() => setShowDatePicker(true)}
-                icon="calendar"
-              />
-            }
-          />
-        </View>
-        <Divider />
-        {showDatePicker && (
-          <DateTimePicker
-            value={transaksi.tanggal_terima || new Date()}
-            mode="date"
-            display={Platform.OS === "ios" ? "spinner" : "default"}
-            onChange={(event, value) => handleInput("tanggal_terima", value)}
-          />
-        )}
+          <View style={{ marginVertical: 16 }}>
+            <TextInput
+              label="Tanggal"
+              editable={false}
+              value={`${ServiceBaseHumanDate(transaksi.tanggal_terima) || ""}`}
+              right={
+                <TextInput.Icon
+                  onPress={() => setShowDatePicker(true)}
+                  icon="calendar"
+                />
+              }
+            />
+          </View>
+          <Divider />
+          {showDatePicker && (
+            <DateTimePicker
+              value={transaksi.tanggal_terima || new Date()}
+              mode="date"
+              display={Platform.OS === "ios" ? "spinner" : "default"}
+              onChange={(event, value) => handleInput("tanggal_terima", value)}
+            />
+          )}
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            gap: 8,
-          }}
-        >
-          <TextInput
-            style={{ flex: 1 }}
-            value={transaksi.alamat || ""}
-            onChangeText={(text) => handleInput("alamat", text)}
-            label="Alamat"
-          />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 8,
+            }}
+          >
+            <TextInput
+              style={{ flex: 1 }}
+              value={transaksi.alamat || ""}
+              onChangeText={(text) => handleInput("alamat", text)}
+              label="Alamat"
+            />
 
-          <TextInput
-            style={{ flex: 1 }}
-            value={transaksi.no_hp || ""}
-            onChangeText={(text) => handleInput("no_hp", text)}
-            label="Nomor Telepon"
-          />
-        </View>
+            <TextInput
+              style={{ flex: 1 }}
+              value={transaksi.no_hp || ""}
+              onChangeText={(text) => handleInput("no_hp", text)}
+              label="Nomor Telepon"
+            />
+          </View>
 
-        <View style={{ marginHorizontal: 16, gap: 16, marginVertical: 24 }}>
-          <Button onPress={transaksiCreate} mode="contained">
-            Lanjut
-          </Button>
+          <View style={{ marginHorizontal: 16, gap: 16, marginVertical: 24 }}>
+            <Button onPress={transaksiCreate} mode="contained">
+              Lanjut
+            </Button>
 
-          {/* <Button
+            {/* <Button
             mode="constained"
             onPress={() => {
               setIsAuthenticated(false);
@@ -185,8 +196,9 @@ const ScreenTransaksiCreate = ({ navigation }) => {
           >
             Status Cucian
           </Button> */}
-        </View>
-      </ScrollView>
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };

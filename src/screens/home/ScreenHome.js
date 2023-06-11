@@ -24,6 +24,18 @@ const ScreenHome = ({ navigation }) => {
       <Button
         onPress={() => {
           setIsAuthenticated(true);
+          navigation.navigate("RouterPelanggan", {
+            screen: "ScreenPelangganList",
+          });
+        }}
+        mode="contained"
+        style={{ backgroundColor: "#FFAAC9" }}
+      >
+        Pelanggan
+      </Button>
+      <Button
+        onPress={() => {
+          setIsAuthenticated(true);
           navigation.navigate("RouterTransaksi", {
             screen: "ScreenTransaksiCreate",
           });

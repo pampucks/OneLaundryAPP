@@ -17,8 +17,8 @@ const ScreenBarangList = ({ navigation }) => {
     const debounce = _.debounce(() => {
       ServiceBarangList(page, terms)
         .then(({ results, pagination }) => {
-          setDaftarBarang(results);
           setPagination(pagination);
+          setDaftarBarang(results);
         })
         .catch((error) => console.log(error))
         .finally(() => setComplete(true));
