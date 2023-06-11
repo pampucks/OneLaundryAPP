@@ -47,6 +47,7 @@ const ScreenTransaksiStatusCucian = ({ navigation }) => {
   };
 
   const handleStatusChange = (item) => {
+    setStatus(false);
     if (item === "status_cucian") setStatus(true);
     setIsAuthenticated(false);
     navigation.navigate("RouterTransaksi", { screen: "ScreenTransaksiDone" });
