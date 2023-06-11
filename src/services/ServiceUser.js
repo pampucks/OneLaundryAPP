@@ -6,6 +6,7 @@ export const ServiceUserLogin = (payload) => {
     ServiceBaseRequest.post(`${CONFIG_BASE_API_URL}/user/login`, payload)
       .then((response) => {
         resolve(response.data.token);
+        console.log(response.data.token);
       })
       .catch((error) => reject(error));
   });
@@ -16,6 +17,7 @@ export const ServiceUserRegister = (payload) => {
     ServiceBaseRequest.post(`${CONFIG_BASE_API_URL}/user/register`, payload)
       .then((response) => {
         resolve(response.data);
+        console.log(response.data);
       })
       .catch((error) => reject(error));
   });
