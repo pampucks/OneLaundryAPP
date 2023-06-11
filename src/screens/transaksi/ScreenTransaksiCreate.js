@@ -35,7 +35,7 @@ const ScreenTransaksiCreate = ({ navigation }) => {
     const debounce = _.debounce(() => {
       ServiceTransaksiCreate(transaksi)
         .then(() => {
-          navigation.navigate("ScreenTransaksiBarangChoice");
+          navigation.navigate("ScreenTransaksiBarangChoice", { transaksi });
         })
         .catch((error) => {
           console.log(error);
@@ -87,44 +87,41 @@ const ScreenTransaksiCreate = ({ navigation }) => {
         // contentContainerStyle={{ flex: 1, justifyContent: "center" }}
       >
         <ScreenTransaksiStatusCucian onPress={openStatusCucian} />
-        {transaksi.no_faktur && (
+        {/* {transaksi.no_faktur && (
           <List.Item
             title={transaksi.nama_customer}
             // description={transaksi.noTelepon}
           />
-        )}
-        {/* <Divider />
+        )} */}
+        <Divider />
 
-        <ScreenTransaksiPengembalian
-          icon="hand-coin-outline"
-          title="Pengembalian Barang"
-          action={() => openPengembalian()}
-        />
-        <Divider /> */}
+        <ScreenTransaksiPengembalian onPress={openPengembalian} />
+        <Divider />
 
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
+            marginVertical: 16,
+            // flexDirection: "row",
+            // justifyContent: "space-between",
             gap: 8,
           }}
         >
           <TextInput
-            style={{ flex: 1 }}
+            // style={{ flex: 1 }}
             value={transaksi.no_faktur || ""}
             onChangeText={(text) => handleInput("no_faktur", text)}
             label="Nomor Faktur"
           />
 
-          <TextInput
+          {/* <TextInput
             style={{ flex: 1 }}
             value={transaksi.nama_customer || ""}
             onChangeText={(text) => handleInput("nama_customer", text)}
             label="Nama Pelanggan"
           />
-        </View>
+        </View> */}
 
-        <View style={{ marginVertical: 16 }}>
+          {/* <View style={{ marginVertical: 16 }}> */}
           <TextInput
             label="Tanggal"
             editable={false}
@@ -147,7 +144,7 @@ const ScreenTransaksiCreate = ({ navigation }) => {
           />
         )}
 
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -167,7 +164,7 @@ const ScreenTransaksiCreate = ({ navigation }) => {
             onChangeText={(text) => handleInput("no_hp", text)}
             label="Nomor Telepon"
           />
-        </View>
+        </View> */}
 
         <View style={{ marginHorizontal: 16, gap: 16, marginVertical: 24 }}>
           <Button onPress={transaksiCreate} mode="contained">

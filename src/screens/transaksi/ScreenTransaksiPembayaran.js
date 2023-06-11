@@ -15,7 +15,7 @@ import {
 import _ from "lodash";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-const ScreenTransaksiPembayaran = ({ navigation }) => {
+const ScreenTransaksiPembayaran = ({ onPres }) => {
   const [transaksi, setTransaksi] = useState(SchemaTransaksi);
   const [complete, setComplete] = useState(false);
   const [daftarItemCucian, setDaftarItemCucian] = useState([]);
