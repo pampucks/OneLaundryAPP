@@ -22,10 +22,10 @@ ServiceBaseRequest.interceptors.response.use(
     return config;
   },
   (error) => {
-    // if (error?.response?.data?.errors) {
-    //   let messages = error.response.data.errors;
-    //   console.log(messages);
-    // }
+    if (error?.response?.data?.errors) {
+      let messages = error.response.data.errors;
+      console.log(messages);
+    }
 
     if (
       error &&

@@ -53,7 +53,7 @@ const ScreenPelangganList = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#7286d3" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#537188" }}>
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={navigation.toggleDrawer} />
         <Appbar.Content title="Pelanggan" />
