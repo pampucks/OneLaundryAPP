@@ -207,7 +207,7 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
           }}
           // contentContainerStyle={{ flex: 1, justifyContent: "center" }}
         >
-          <ScreenTransaksiStatusCucian onPress={openStatusCucian} />
+          {/* <ScreenTransaksiStatusCucian onPress={openStatusCucian} /> */}
           {/* {transaksi.no_faktur && (
             <List.Item
               title={transaksi.nama_customer}
@@ -216,8 +216,8 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
           )} */}
           {/* <Divider /> */}
 
-          <ScreenTransaksiPengembalian onPress={openPengembalian} />
-          <Divider />
+          {/* <ScreenTransaksiPengembalian onPress={openPengembalian} />
+          <Divider /> */}
 
           <View
             style={{
@@ -305,10 +305,10 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
               <DataTable.Title>Total</DataTable.Title>
               <DataTable.Cell numeric>item</DataTable.Cell>
             </DataTable.Row>
-            <DataTable.Row>
+            {/* <DataTable.Row>
               <DataTable.Title>Sisa</DataTable.Title>
               <DataTable.Cell numeric>total</DataTable.Cell>
-            </DataTable.Row>
+            </DataTable.Row> */}
             <DataTable.Row>
               <DataTable.Title>Kembali</DataTable.Title>
               <DataTable.Cell numeric>sisa</DataTable.Cell>
