@@ -96,6 +96,7 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
       const payload = {
         kode_barang: item.kode_barang,
         nama_barang: item.nama_barang,
+        qty: 1,
         // hargaBeli: item.hargaBeli,
         // jumlahBeli: 1,
         // subtotal: 1 * item.hargaBeli,

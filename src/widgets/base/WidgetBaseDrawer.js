@@ -13,7 +13,8 @@ import {
 import { RouterBarangAuthenticated } from "../../routers/RouterBarang";
 import { RouterHomeAuthenticated } from "../../routers/RouterHome";
 import { RouterTransaksiAuthenticated } from "../../routers/RouterTransaksi";
-import { RouterLaporanAuthenticated } from "../../routers/RouterLaporan";
+// import { RouterLaporanAuthenticated } from "../../routers/RouterLaporan";
+import { RouterPelangganAuthenticated } from "../../routers/RouterPelanggan";
 
 const Drawer = createDrawerNavigator();
 
@@ -66,6 +67,13 @@ export default function WidgetBaseDrawer() {
                 }}
                 name="RouterBarang"
                 component={RouterBarangAuthenticated}
+              />
+              <Drawer.Screen
+                options={{
+                  drawerLabel: "Pelanggan",
+                }}
+                name="RouterPelanggan"
+                component={RouterPelangganAuthenticated}
               />
               <Drawer.Screen
                 options={{
