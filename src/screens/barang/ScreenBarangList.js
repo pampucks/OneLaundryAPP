@@ -17,8 +17,8 @@ const ScreenBarangList = ({ navigation }) => {
     const debounce = _.debounce(() => {
       ServiceBarangList(page, terms)
         .then(({ results, pagination }) => {
-          setDaftarBarang(results);
           setPagination(pagination);
+          setDaftarBarang(results);
         })
         .catch((error) => console.log(error))
         .finally(() => setComplete(true));
@@ -53,7 +53,7 @@ const ScreenBarangList = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#7286d3" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#537188" }}>
       <Appbar.Header>
         <Appbar.Action
           icon="menu"

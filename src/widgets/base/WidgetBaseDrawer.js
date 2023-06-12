@@ -74,13 +74,13 @@ export default function WidgetBaseDrawer() {
                 name="RouterTransaksi"
                 component={RouterTransaksiAuthenticated}
               />
-              <Drawer.Screen
+              {/* <Drawer.Screen
                 options={{
                   drawerLabel: "Laporan",
                 }}
                 name="RouterLaporan"
                 component={RouterLaporanAuthenticated}
-              />
+              /> */}
               <Drawer.Screen
                 options={{
                   drawerLabel: "Settings",

@@ -24,6 +24,18 @@ const ScreenHome = ({ navigation }) => {
       <Button
         onPress={() => {
           setIsAuthenticated(true);
+          navigation.navigate("RouterPelanggan", {
+            screen: "ScreenPelangganList",
+          });
+        }}
+        mode="contained"
+        style={{ backgroundColor: "#FFAAC9" }}
+      >
+        Pelanggan
+      </Button>
+      <Button
+        onPress={() => {
+          setIsAuthenticated(true);
           navigation.navigate("RouterTransaksi", {
             screen: "ScreenTransaksiCreate",
           });
@@ -33,7 +45,7 @@ const ScreenHome = ({ navigation }) => {
       >
         Transaksi
       </Button>
-      <Button
+      {/* <Button
         onPress={() => {
           setIsAuthenticated(true);
           navigation.navigate("RouterLaporan", {
@@ -44,7 +56,7 @@ const ScreenHome = ({ navigation }) => {
         style={{ backgroundColor: "#57C5B6" }}
       >
         Laporan
-      </Button>
+      </Button> */}
     </SafeAreaView>
   );
 };

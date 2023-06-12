@@ -1,9 +1,8 @@
+import { ServiceBaseRandomID } from "../services/ServiceBase";
+
 export default {
-  no_faktur: "",
+  no_faktur: ServiceBaseRandomID("tx"),
   tanggal_terima: new Date(),
-  nama_customer: "",
-  alamat: "",
-  no_hp: "",
   uang_muka: 0,
   berat: 0,
   sisa: 0,
