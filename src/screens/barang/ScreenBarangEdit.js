@@ -100,6 +100,15 @@ const ScreenBarangEdit = ({ navigation, route }) => {
               onChangeText={(text) => handleInput("nama_barang", text)}
               label="Nama Barang"
             />
+            <TextInput
+              value={`${barang.hargaSatuan || ""}`}
+              onChangeText={(text) =>
+                handleInput("hargaSatuan", parseInt(text))
+              }
+              returnKeyType={"next"}
+              keyboardType={"numeric"}
+              label="Harga Satuan"
+            />
 
             <Button
               onPress={barangEdit}

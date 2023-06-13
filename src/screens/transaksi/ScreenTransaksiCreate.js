@@ -16,46 +16,45 @@ import {
   List,
   TextInput,
 } from "react-native-paper";
-import { SafeAreaView, ScrollView, View } from "react-native";
-import WidgetBaseLoader from "../../widgets/base/WidgetBaseLoader";
+import { Alert, Platform, SafeAreaView, ScrollView, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   ServiceBaseHumanDate,
   ServiceBaseHumanCurrency,
   ServiceBaseRandomID,
   ServiceBaseIsDuplicateArray,
+  ServiceBaseFileSharing,
 } from "../../services/ServiceBase";
-import { ServiceTransaksiCreate } from "../../services/ServiceTransaksi";
+import {
+  ServiceTransaksiCreate,
+  ServiceTransaksiShare,
+} from "../../services/ServiceTransaksi";
 import { ContextUserAuthentication } from "../../contexts/ContextUser";
 import ScreenTransaksiStatusCucian from "./ScreenTransaksiStatusCucian";
 import ScreenTransaksiPengembalian from "./ScreenTransaksiPengembalian";
 import WidgetBarangChoice from "../../widgets/barang/WidgetBarangChoice";
 import SchemaPelanggan from "../../schema/SchemaPelanggan";
 import WidgetPelangganChoice from "../../widgets/pelanggan/WidgetPelangganChoice";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-const ScreenTransaksiCreate = memo(({ navigation }) => {
-  const [transaksi, setTransaksi] = useState(SchemaTransaksi);
+const ScreenTransaksiCreate = ({ navigation }) => {
+  const [transaksi, setTransaksi] = useState({});
   const [complete, setComplete] = useState(false);
-  const [daftarItemBeli, setDaftarItemBeli] = useState([]);
-  const [pelanggan, setPelanggan] = useState(SchemaPelanggan);
+  const [daftarItemBarang, setDaftarItemBarang] = useState([]);
+  const [pelanggan, setPelanggan] = useState({});
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [cucian, setCucian] = useState({});
   const [, setIsAuthenticated] = useContext(ContextUserAuthentication);
   const [pengembalian, setPengembalian] = useState();
-  const [beratKilo, setBeratKilo] = useState(0);
-  const [harga, setHarga] = useState(0);
+  const [total, setTotal] = useState(0);
 
   const handleInput = (name, value) => {
     if (name === "tanggal_terima") setShowDatePicker(false);
     setTransaksi((values) => ({ ...values, [name]: value }));
   };
 
-  const randomFaktur = () => {
-    handleInput("no_faktur", ServiceBaseRandomID("TX"));
-  };
-
-  const handleInputItemBeli = (index, value, item) => {
-    setDaftarItemBeli((values) => {
+  const handleInputItemBarang = (index, value, item) => {
+    setDaftarItemBarang((values) => {
       const qty = parseInt(value);
       const items = [...values];
 
@@ -63,11 +62,15 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
         items.splice(index, 1);
       } else {
         items[index].qty = qty;
-        // items[index].subtotal = item.jumlah_beli * item.hargaBeli;
+        items[index].subtotal = item.qty * item.hargaSatuan;
       }
 
       return items;
     });
+  };
+
+  const randomFaktur = () => {
+    handleInput("no_faktur", ServiceBaseRandomID("TX"));
   };
 
   const addPelanggan = (pelanggan) => {
@@ -75,51 +78,101 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
     debounce();
   };
 
-  const addOrUpdate = useCallback(
-    (item) => {
-      const isDuplicate = ServiceBaseIsDuplicateArray(
-        daftarItemBeli,
-        item.kode_barang,
-        "kode_barang"
-      );
-      if (isDuplicate) {
-        update(item);
-      } else {
-        add(item);
-      }
-    },
-    [daftarItemBeli]
-  );
-
-  const add = (item) => {
-    setTimeout(() => {
-      const payload = {
-        kode_barang: item.kode_barang,
-        nama_barang: item.nama_barang,
-        qty: 1,
-        // hargaBeli: item.hargaBeli,
-        // jumlahBeli: 1,
-        // subtotal: 1 * item.hargaBeli,
-      };
-
-      setDaftarItemBeli((values) => [...values, payload]);
-    }, 100);
-  };
-
   const update = (item) => {
-    setTimeout(() => {
-      setDaftarItemBeli((values) => {
+    const debounce = _.debounce(() => {
+      setDaftarItemBarang((values) => {
         const items = [...values];
         const b = items.find((value) => value.kode_barang === item.kode_barang);
         const i = items.findIndex(
           (value) => value.kode_barang === item.kode_barang
         );
         b.qty = b.qty + 1;
-        // b.subtotal = b.jumlahBeli * b.hargaBeli;
+        b.subtotal = b.qty * b.hargaSatuan;
         items[i] = b;
         return items;
       });
     }, 100);
+
+    debounce();
+  };
+
+  const add = (item) => {
+    const debounce = _.debounce(() => {
+      const payload = {
+        kode_barang: item.kode_barang,
+        nama_barang: item.nama_barang,
+        qty: 1,
+        hargaSatuan: item.hargaSatuan,
+        subtotal: 1 * item.hargaSatuan,
+        // hargaBeli: item.hargaBeli,
+        // jumlahBeli: 1,
+        // subtotal: 1 * item.hargaBeli,
+      };
+
+      setDaftarItemBarang((values) => [...values, payload]);
+    }, 100);
+
+    debounce();
+  };
+
+  const addOrUpdate = (item) => {
+    const isDuplicate = ServiceBaseIsDuplicateArray(
+      daftarItemBarang,
+      item.kode_barang,
+      "kode_barang"
+    );
+    if (isDuplicate) {
+      update(item);
+    } else {
+      add(item);
+    }
+  };
+
+  //     setDaftarItemBarang((values) => [...values, payload]);
+  //   }, 100);
+  // };
+
+  const calculateSubtotal = useMemo(() => {
+    const total = _.sumBy(daftarItemBarang, "subtotal");
+    handleInput("total", total);
+    return total;
+  }, [daftarItemBarang]);
+
+  const calculateBayar = useMemo(() => {
+    const kembalian = transaksi.dibayar - calculateSubtotal;
+    handleInput("kembali", kembalian);
+    return kembalian;
+  }, [transaksi.dibayar, daftarItemBarang]);
+
+  const askShare = () => {
+    const actions = [
+      {
+        text: "Ya",
+        onPress: transaksiShare,
+      },
+      {
+        text: "Batal",
+        onPress: () => {},
+        style: "cancel",
+      },
+    ];
+    Alert.alert("Share faktur?", null, actions);
+  };
+
+  const transaksiShare = () => {
+    setComplete(false);
+
+    const debounce = _.debounce(() => {
+      ServiceTransaksiShare(transaksi.no_faktur)
+        .then(async (blob) => {
+          ServiceBaseFileSharing("NO_FAKTUR", blob);
+          // clear
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setComplete(true));
+    }, 500);
+
+    debounce();
   };
 
   const transaksiCreate = () => {
@@ -130,10 +183,8 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
 
       const payload = {
         ...transaksi,
-        items: [...daftarItemTransaksi],
+        items: [...daftarItemBarang],
       };
-
-      setComplete(false);
 
       ServiceTransaksiCreate(payload)
         .then((data) => {
@@ -144,39 +195,39 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
           console.log(error);
         })
         .finally(() => setComplete(true));
-    }, 1000);
+    }, 500);
 
     debounce();
   };
 
-  const openStatusCucian = _.debounce((item) => {
-    setCucian(item);
-    setIsAuthenticated(false);
-    navigation.navigate("RouterTransaksi", {
-      screen: "ScreenTransaksiStatusCucian",
-    });
-  }, 100);
+  // const openStatusCucian = _.debounce((item) => {
+  //   setCucian(item);
+  //   setIsAuthenticated(false);
+  //   navigation.navigate("RouterTransaksi", {
+  //     screen: "ScreenTransaksiStatusCucian",
+  //   });
+  // }, 100);
 
-  const openPengembalian = _.debounce(() => {
-    setPengembalian();
-    setIsAuthenticated(false);
-    navigation.navigate("RouterTransaksi", {
-      screen: "ScreenTransaksiPengembalian",
-    });
-  }, 100);
+  // const openPengembalian = _.debounce(() => {
+  //   setPengembalian();
+  //   setIsAuthenticated(false);
+  //   navigation.navigate("RouterTransaksi", {
+  //     screen: "ScreenTransaksiPengembalian",
+  //   });
+  // }, 100);
 
-  const cucianPerkilo = () => {
-    let jumlah = 0;
-    if (beratKilo <= 1) {
-      jumlah = 5000;
-    } else {
-      jumlah = 5000 + (beratKilo - 1) * 5000;
-    }
-    setHarga(jumlah);
-  };
+  // const cucianPerkilo = () => {
+  //   let jumlah = 0;
+  //   if (beratKilo <= 1) {
+  //     jumlah = 5000;
+  //   } else {
+  //     jumlah = 5000 + (beratKilo - 1) * 5000;
+  //   }
+  //   setHarga(jumlah);
+  // };
 
   const clear = () => {
-    setDaftarItemBeli([]);
+    setDaftarItemBarang([]);
     setPelanggan(SchemaPelanggan);
     setComplete(true);
     setTransaksi(SchemaTransaksi);
@@ -184,12 +235,12 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
 
   useEffect(() => {
     setComplete(false);
-    const debounce = _.debounce(() => setComplete(true), 1000);
+    const debounce = _.debounce(() => setComplete(true), 500);
     debounce();
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#7286d3" }}>
+    <SafeAreaProvider style={{ flex: 1, backgroundColor: "#7286d3" }}>
       <Appbar.Header>
         <Appbar.Action
           icon="menu"
@@ -278,70 +329,73 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
           )}
 
           <WidgetBarangChoice onPress={(item) => addOrUpdate(item)} />
-          {daftarItemBeli.map((barang, index) => (
-            <View key={index}>
-              <List.Item
-                style={{ marginVertical: -16 }}
-                key={index}
-                title={`${barang.nama_barang} #${barang.kode_barang}`}
-                // description={ServiceBaseHumanCurrency(item_barang.berat)}
-                right={(props) => (
-                  <>
-                    <TextInput
-                      key={index}
-                      mode="outlined"
-                      value={`${daftarItemBeli[index].qty || ""}`}
-                      onChangeText={(text) =>
-                        handleInputItemBeli(index, text, barang)
-                      }
-                    />
-                  </>
-                )}
-              />
-            </View>
+          {daftarItemBarang.map((barang, index) => (
+            // <View key={index}>
+            <List.Item
+              style={{ marginVertical: -16 }}
+              key={index}
+              title={`${barang.nama_barang} #${barang.kode_barang}`}
+              description={`${barang.hargaSatuan}`}
+              right={(props) => (
+                <>
+                  <TextInput
+                    key={index}
+                    mode="outlined"
+                    value={`${barang.qty || ""}`}
+                    onChangeText={(text) =>
+                      handleInputItemBarang(index, text, barang)
+                    }
+                  />
+                </>
+              )}
+            />
+            // </View>
           ))}
 
           <DataTable>
             <DataTable.Row>
-              <DataTable.Title>Total</DataTable.Title>
-              <DataTable.Cell numeric>item</DataTable.Cell>
+              <DataTable.Title>Jumlah Barang</DataTable.Title>
+              <DataTable.Cell numeric>
+                {daftarItemBarang.length || 0}
+              </DataTable.Cell>
             </DataTable.Row>
-            {/* <DataTable.Row>
-              <DataTable.Title>Sisa</DataTable.Title>
-              <DataTable.Cell numeric>total</DataTable.Cell>
-            </DataTable.Row> */}
+            <DataTable.Row>
+              <DataTable.Title>Total</DataTable.Title>
+              <DataTable.Cell numeric>{transaksi.total || 0}</DataTable.Cell>
+            </DataTable.Row>
             <DataTable.Row>
               <DataTable.Title>Kembali</DataTable.Title>
-              <DataTable.Cell numeric>sisa</DataTable.Cell>
+              <DataTable.Cell numeric>{transaksi.kembali || 0}</DataTable.Cell>
             </DataTable.Row>
           </DataTable>
 
           <View
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
+              // flexDirection: "row",
+              // justifyContent: "center",
               gap: 8,
               marginVertical: 8,
             }}
           >
             <TextInput
               style={{ flex: 1 }}
-              value={transaksi.dibayar || ""}
-              onChangeText={(text) => handleInput("dibayar", text)}
+              value={`${transaksi.dibayar || ""}`}
+              error={calculateBayar < 0}
+              onChangeText={(text) => handleInput("dibayar", parseInt(text))}
               label="Bayar"
             />
 
-            <TextInput
+            {/* <TextInput
               style={{ flex: 1 }}
               value={transaksi.berat || ""}
-              onChangeText={(text) => handleInput("berat", text)}
+              onChangeText={(text) => handleInput("berat", parseInt(text))}
               label="PerKilo"
-            />
+            /> */}
           </View>
 
           <View style={{ marginHorizontal: 16, gap: 16, marginVertical: 24 }}>
             <Button onPress={transaksiCreate} mode="contained">
-              Simpan
+              Bayar
             </Button>
 
             {/* <Button
@@ -358,8 +412,8 @@ const ScreenTransaksiCreate = memo(({ navigation }) => {
           </View>
         </ScrollView>
       )}
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
-});
+};
 
 export default ScreenTransaksiCreate;

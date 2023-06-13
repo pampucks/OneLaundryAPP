@@ -76,6 +76,7 @@ const WidgetBarangChoice = ({ onPress }) => {
                   <DataTable.Header>
                     <DataTable.Title>Kode Barang</DataTable.Title>
                     <DataTable.Title>Nama Barang</DataTable.Title>
+                    <DataTable.Title numeric>Harga Satuan</DataTable.Title>
                   </DataTable.Header>
 
                   {daftarBarang.map((barang, index) => (
@@ -90,6 +91,9 @@ const WidgetBarangChoice = ({ onPress }) => {
                     >
                       <DataTable.Cell>{barang.kode_barang}</DataTable.Cell>
                       <DataTable.Cell>{barang.nama_barang}</DataTable.Cell>
+                      <DataTable.Cell numeric>
+                        {barang.hargaSatuan}
+                      </DataTable.Cell>
                     </DataTable.Row>
                   ))}
                 </DataTable>

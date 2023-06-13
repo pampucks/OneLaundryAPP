@@ -12,10 +12,10 @@ const ScreenBarangList = ({ navigation }) => {
   const [daftarBarang, setDaftarBarang] = useState([]);
   const [pagination, setPagination] = useState({});
 
-  const barangList = (page, terms) => {
+  const barangList = _.debounce((page, terms) => {
     setComplete(false);
     const debounce = _.debounce(() => {
-      ServiceBarangList(page, terms)
+      ServiceBarangList(page ? page : 1, terms ? terms : "")
         .then(({ results, pagination }) => {
           setPagination(pagination);
           setDaftarBarang(results);
@@ -25,7 +25,7 @@ const ScreenBarangList = ({ navigation }) => {
     }, 500);
 
     debounce();
-  };
+  });
 
   const paginate = (page) => {
     barangList(page, query);
@@ -62,6 +62,16 @@ const ScreenBarangList = ({ navigation }) => {
           }}
         />
         <Appbar.Content title="Barang Laundry" />
+        <Appbar.Action
+          icon="arrow-left"
+          disabled={_.isNull(pagination?.prev)}
+          onPress={() => paginate(pagination?.prev)}
+        />
+        <Appbar.Action
+          icon="arrow-right"
+          disabled={_.isNull(pagination?.next)}
+          onPress={() => paginate(pagination?.next)}
+        />
         <Appbar.Action icon="refresh" onPress={refresh} />
       </Appbar.Header>
       <ScrollView style={{ paddingBottom: 30 }}>
@@ -73,6 +83,9 @@ const ScreenBarangList = ({ navigation }) => {
             <DataTable.Title textStyle={{ color: "#fff" }}>
               Nama Barang
             </DataTable.Title>
+            <DataTable.Title textStyle={{ color: "#fff" }} numeric>
+              Harga Satuan
+            </DataTable.Title>
           </DataTable.Header>
           {complete &&
             daftarBarang.map((barang, index) => (
@@ -82,6 +95,9 @@ const ScreenBarangList = ({ navigation }) => {
                 </DataTable.Cell>
                 <DataTable.Cell textStyle={{ color: "#fff" }}>
                   {barang.nama_barang}
+                </DataTable.Cell>
+                <DataTable.Cell textStyle={{ color: "#fff" }} numeric>
+                  {barang.hargaSatuan}
                 </DataTable.Cell>
               </DataTable.Row>
             ))}

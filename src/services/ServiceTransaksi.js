@@ -94,3 +94,24 @@ export const ServiceTransaksiReport = (payload) => {
       .catch((error) => reject(error));
   });
 };
+
+export const ServiceTransaksiShare = (faktur) => {
+  return new Promise(async (resolve, reject) => {
+    const config = {
+      headers: {
+        "x-access-token": await AsyncStorage.getItem("@token"),
+      },
+      responseType: "blob",
+    };
+
+    ServiceBaseRequest.post(
+      `${CONFIG_BASE_API_URL}/transaksi/${faktur}/faktur-excel`,
+      null,
+      config
+    )
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => reject(error));
+  });
+};

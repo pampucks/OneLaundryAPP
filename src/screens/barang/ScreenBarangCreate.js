@@ -64,6 +64,16 @@ const ScreenBarangCreate = ({ navigation }) => {
               label="Nama Barang"
             />
 
+            <TextInput
+              value={`${barang.hargaSatuan || ""}`}
+              onChangeText={(text) =>
+                handleInput("hargaSatuan", parseInt(text))
+              }
+              returnKeyType={"next"}
+              keyboardType={"numeric"}
+              label="Harga Satuan"
+            />
+
             <Button
               onPress={barangCreate}
               mode="contained"
