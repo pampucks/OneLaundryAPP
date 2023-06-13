@@ -9,13 +9,11 @@ import {
   RouterUserAuthenticated,
   RouterUserNotAuthenticated,
 } from "../../routers/RouterUser";
-import * as React from "react";
-import { ContextUserAuthentication } from "../../contexts/ContextUser";
-import { useHookUserAuthenticationInterface } from "../../hooks/HookUser";
-import { useHookBaseRefresh } from "../../hooks/HookBase";
-import { ContextBaseRefresh } from "../../contexts/ContextBase";
-import { Text } from "react-native";
-// import { RouterLaporanAuthenticated } from "../../routers/RouterLaporan";
+import { RouterBarangAuthenticated } from "../../routers/RouterBarang";
+import { RouterPelangganAuthenticated } from "../../routers/RouterPelanggan";
+import { RouterHomeAuthenticated } from "../../routers/RouterHome";
+import { RouterTransaksiAuthenticated } from "../../routers/RouterTransaksi";
+import { RouterLaporanAuthenticated } from "../../routers/RouterLaporan";
 
 const Drawer = createDrawerNavigator();
 
@@ -76,25 +74,19 @@ export default function WidgetBaseDrawer() {
                 />
                 <Drawer.Screen
                   options={{
-                    drawerLabel: "Pelanggan",
-                  }}
-                  name="RouterPelanggan"
-                  component={RouterPelangganAuthenticated}
-                />
-                <Drawer.Screen
-                  options={{
                     drawerLabel: "Transaksi",
                   }}
                   name="RouterTransaksi"
                   component={RouterTransaksiAuthenticated}
                 />
-                {/* <Drawer.Screen
-                options={{
-                  drawerLabel: "Laporan",
-                }}
-                name="RouterLaporan"
-                component={RouterLaporanAuthenticated}
-              /> */}
+                <Drawer.Screen
+                  options={{
+                    drawerLabel: "Laporan",
+                  }}
+                  name="RouterLaporan"
+                  component={RouterLaporanAuthenticated}
+                />{" "}
+                */}
                 <Drawer.Screen
                   options={{
                     drawerLabel: "Settings",

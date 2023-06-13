@@ -7,14 +7,15 @@ export const ServicePelangganList = (page, terms) => {
     const config = {
       headers: {
         "x-access-token": await AsyncStorage.getItem("@token"),
-        params: { page, terms },
       },
+      params: { page, terms },
     };
 
     ServiceBaseRequest.get(`${CONFIG_BASE_API_URL}/pelanggan`, config)
       .then((response) => {
         const { results, ...pagination } = response.data;
-        resolve({ results, ...pagination });
+
+        resolve({ results, pagination });
       })
       .catch((error) => reject(error));
   });

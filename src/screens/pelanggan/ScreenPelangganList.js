@@ -21,6 +21,7 @@ const ScreenPelangganList = ({ navigation }) => {
           setDaftarPelanggan(results);
         })
         .catch((error) => console.log(error))
+
         .finally(() => setComplete(true));
     }, 500);
 
@@ -87,9 +88,8 @@ const ScreenPelangganList = ({ navigation }) => {
             <DataTable.Title textStyle={{ color: "#fff" }}>
               Nama Pelanggan
             </DataTable.Title>
-            <DataTable.Title textStyle={{ color: "#fff", paddingLeft: 8 }}>
-              Alamat
-            </DataTable.Title>
+
+            {/* <DataTable.Title textStyle={{ color: "#fff" }}>Alamat Pelanggan</DataTable.Title> */}
             <DataTable.Title textStyle={{ color: "#fff" }}>
               Telepon Pelanggan
             </DataTable.Title>
@@ -107,9 +107,8 @@ const ScreenPelangganList = ({ navigation }) => {
                 <DataTable.Cell textStyle={{ color: "#fff" }}>
                   {pelanggan.nama_pelanggan}
                 </DataTable.Cell>
-                <DataTable.Cell textStyle={{ color: "#fff" }}>
-                  {pelanggan.alamat_pelanggan}
-                </DataTable.Cell>
+
+                {/* <DataTable.Cell>{pelanggan.alamat_pelanggan}</DataTable.Cell> */}
                 <DataTable.Cell textStyle={{ color: "#fff" }}>
                   {pelanggan.telepon_pelanggan}
                 </DataTable.Cell>
