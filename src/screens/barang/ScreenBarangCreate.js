@@ -4,7 +4,7 @@ import { ServiceBarangCreate } from "../../services/ServiceBarang";
 import { Appbar, Button, TextInput } from "react-native-paper";
 import SchemaBarang from "../../schema/SchemaBarang";
 import WidgetBaseLoader from "../../widgets/base/WidgetBaseLoader";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { Alert, SafeAreaView, ScrollView, View } from "react-native";
 
 const ScreenBarangCreate = ({ navigation }) => {
   const [barang, setBarang] = useState(SchemaBarang);
@@ -19,6 +19,7 @@ const ScreenBarangCreate = ({ navigation }) => {
     const debounce = _.debounce(() => {
       ServiceBarangCreate(barang)
         .then(() => {
+          Alert.alert("Notifikasi", "Berhasil");
           navigation.goBack();
         })
         .catch((error) => {
@@ -62,6 +63,22 @@ const ScreenBarangCreate = ({ navigation }) => {
               value={barang.nama_barang || ""}
               onChangeText={(text) => handleInput("nama_barang", text)}
               label="Nama Barang"
+            />
+
+            {/* <TextInput
+              // mode="outlined"
+              value={`${barang.qty || ""}`}
+              onChangeText={(text) => handleInput("qty", parseInt(text))}
+              label="Qty"
+            /> */}
+
+            <TextInput
+              // mode="outlined"
+              value={`${barang.hargaSatuan || ""}`}
+              onChangeText={(text) =>
+                handleInput("hargaSatuan", parseInt(text))
+              }
+              label="Harga Satuan"
             />
 
             <Button

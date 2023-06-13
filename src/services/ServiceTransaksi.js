@@ -36,7 +36,7 @@ export const ServiceTransaksiCreate = (payload) => {
   });
 };
 
-export const ServiceTransaksiDetail = (faktur) => {
+export const ServiceTransaksiDetail = (no_faktur) => {
   return new Promise(async (resolve, reject) => {
     const config = {
       headers: {
@@ -44,16 +44,19 @@ export const ServiceTransaksiDetail = (faktur) => {
       },
     };
 
-    ServiceBaseRequest.get(`${CONFIG_BASE_API_URL}/transaksi/${faktur}`, config)
+    ServiceBaseRequest.get(
+      `${CONFIG_BASE_API_URL}/transaksi/${no_faktur}`,
+      config
+    )
       .then((response) => {
-        const { items, ...pembelian } = response.data;
-        resolve({ pembelian, items });
+        const { items, ...transaksi } = response.data;
+        resolve({ transaksi, items });
       })
       .catch((error) => reject(error));
   });
 };
 
-export const ServiceTransaksiPrint = (faktur) => {
+export const ServiceTransaksiPrint = (no_faktur) => {
   return new Promise(async (resolve, reject) => {
     const config = {
       headers: {
@@ -63,7 +66,7 @@ export const ServiceTransaksiPrint = (faktur) => {
     };
 
     ServiceBaseRequest.post(
-      `${CONFIG_BASE_API_URL}/transaksi/${faktur}/faktur-excel`,
+      `${CONFIG_BASE_API_URL}/transaksi/${no_faktur}/faktur-excel`,
       null,
       config
     )

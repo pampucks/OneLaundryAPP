@@ -7,7 +7,7 @@ import {
 import { Alert, SafeAreaView, View } from "react-native";
 import _ from "lodash";
 import WidgetBaseLoader from "../../widgets/base/WidgetBaseLoader";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 
 const ScreenPelangganEdit = ({ navigation, route }) => {
   const [complete, setComplete] = useState(false);
@@ -99,6 +99,18 @@ const ScreenPelangganEdit = ({ navigation, route }) => {
               value={pelanggan.nama_pelanggan || ""}
               onChangeText={(text) => handleInput("nama_pelanggan", text)}
               label="Nama Pelanggan"
+            />
+
+            <TextInput
+              value={pelanggan.alamat_pelanggan || ""}
+              onChangeText={(text) => handleInput("alamat_pelanggan", text)}
+              label="Alamat Pelanggan"
+            />
+
+            <TextInput
+              value={pelanggan.telepon_pelanggan || ""}
+              onChangeText={(text) => handleInput("telepon_pelanggan", text)}
+              label="Telepon Pelanggan"
             />
 
             {/* <TextInput

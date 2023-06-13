@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { useContext, useEffect, useState } from "react";
 import { Alert, SafeAreaView } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import WidgetBaseLogo from "../../widgets/base/WidgetBaseLogo";
 import { ServiceUserLogin } from "../../services/ServiceUser";

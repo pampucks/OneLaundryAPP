@@ -7,11 +7,11 @@
 //   ServiceBaseFileSharing,
 //   ServiceBaseHumanDate,
 // } from "../../services/ServiceBase";
-
-// import { SafeAreaView } from "react-native";
-// import { ScrollView } from "react-native";
 // import { ServiceTransaksiReport } from "../../services/ServiceTransaksi";
-// const ScreenLaporanTransaksi = memo(({ navigation }) => {
+// import { SafeAreaView, ScrollView } from "react-native";
+// // import { ScrollView } from "react-native-gesture-handler";
+
+// const ScreenTransaksiReporting = memo(({ navigation }) => {
 //   const [complete, setComplete] = useState(false);
 //   const [openStartDate, setOpenStartDate] = useState(false);
 //   const [openEndDate, setOpenEndDate] = useState(false);
@@ -51,7 +51,7 @@
 //   return (
 //     <SafeAreaView style={{ flex: 1 }}>
 //       <Appbar.Header>
-//         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
+//         <Appbar.BackAction onPress={() => navigation.goBack()} />
 //         <Appbar.Content title="Laporan Transaksi" />
 //       </Appbar.Header>
 //       {complete && (
@@ -121,4 +121,4 @@
 //   );
 // });
 
-// export default ScreenLaporanTransaksi;
+// export default ScreenTransaksiReporting;

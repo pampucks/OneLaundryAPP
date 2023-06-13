@@ -7,7 +7,7 @@ import {
 import { Alert, SafeAreaView, View } from "react-native";
 import _ from "lodash";
 import WidgetBaseLoader from "../../widgets/base/WidgetBaseLoader";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 
 const ScreenBarangEdit = ({ navigation, route }) => {
   const [complete, setComplete] = useState(false);
@@ -99,6 +99,22 @@ const ScreenBarangEdit = ({ navigation, route }) => {
               value={barang.nama_barang || ""}
               onChangeText={(text) => handleInput("nama_barang", text)}
               label="Nama Barang"
+            />
+
+            {/* <TextInput
+              value={`${barang.qty || ""}`}
+              onChangeText={(text) => handleInput("qty", parseInt(text))}
+              keyboardType={"numeric"}
+              label="Qty"
+            /> */}
+
+            <TextInput
+              value={`${barang.hargaSatuan || ""}`}
+              onChangeText={(text) =>
+                handleInput("hargaSatuan", parseInt(text))
+              }
+              keyboardType={"numeric"}
+              label="Harga Satuan"
             />
 
             <Button
