@@ -64,7 +64,7 @@ const WidgetPelangganChoice = ({ onPress }) => {
                   paddingBottom: 24,
                 }}
               >
-                <Searchbar
+                {/* <Searchbar
                   placeholder="Search"
                   onChangeText={(text) => {}}
                   onSubmitEdit={() => {}}
@@ -72,7 +72,7 @@ const WidgetPelangganChoice = ({ onPress }) => {
                     marginHorizontal: 16,
                     marginVertical: 16,
                   }}
-                />
+                /> */}
 
                 <DataTable>
                   <DataTable.Header style={{ borderBottomColor: "#9BA4B5" }}>

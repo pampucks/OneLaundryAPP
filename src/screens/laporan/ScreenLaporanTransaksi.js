@@ -35,7 +35,7 @@ const ScreenLaporanTransaksi = memo(({ navigation }) => {
     ServiceTransaksiReport(payload)
       .then(async (blob) => {
         try {
-          ServiceBaseFileSharing("LAPORAN-PEMBELIAN", blob);
+          ServiceBaseFileSharing("LAPORAN", blob);
         } catch (error) {
           console.log(error);
         } finally {
@@ -52,7 +52,7 @@ const ScreenLaporanTransaksi = memo(({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-        <Appbar.Content title="Laporan Pembelian" />
+        <Appbar.Content title="Laporan" />
       </Appbar.Header>
       {complete && (
         <ScrollView

@@ -91,13 +91,13 @@ const ScreenTransaksiList = ({ navigation }) => {
       </Appbar.Header>
 
       <ScrollView style={{ paddingBottom: 30 }}>
-        <Searchbar
+        {/* <Searchbar
           placeholder="Search"
           value={query || ""}
           onChangeText={(text) => setQuery(text)}
           onSubmitEditing={search}
           style={{ marginTop: 16, marginHorizontal: 16 }}
-        />
+        /> */}
 
         <DataTable>
           <DataTable.Header>

@@ -63,7 +63,7 @@ const WidgetItemBarangChoice = ({ onPress }) => {
                   paddingBottom: 24,
                 }}
               >
-                <Searchbar
+                {/* <Searchbar
                   placeholder="Search"
                   onChangeText={(text) => {}}
                   onSubmitEdit={() => {}}
@@ -71,7 +71,7 @@ const WidgetItemBarangChoice = ({ onPress }) => {
                     marginHorizontal: 16,
                     marginVertical: 16,
                   }}
-                />
+                /> */}
 
                 <DataTable>
                   <DataTable.Header>
